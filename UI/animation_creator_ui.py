@@ -16,9 +16,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QMainWindow,
-    QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
+    QLayout, QMainWindow, QMenu, QMenuBar,
+    QSizePolicy, QSlider, QSpacerItem, QStatusBar,
+    QVBoxLayout, QWidget)
 
 class Ui_animation_creator(object):
     def setupUi(self, animation_creator):
@@ -29,10 +30,11 @@ class Ui_animation_creator(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.right_layout = QVBoxLayout()
-        self.right_layout.setObjectName(u"right_layout")
+        self.drawing_area = QVBoxLayout()
+        self.drawing_area.setObjectName(u"drawing_area")
+        self.drawing_area.setSizeConstraint(QLayout.SetMinimumSize)
 
-        self.gridLayout.addLayout(self.right_layout, 0, 1, 1, 1)
+        self.gridLayout.addLayout(self.drawing_area, 0, 1, 1, 1)
 
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
@@ -40,15 +42,32 @@ class Ui_animation_creator(object):
         self.frame.setFrameShadow(QFrame.Raised)
         self.gridLayout_2 = QGridLayout(self.frame)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.pushButton = QPushButton(self.frame)
-        self.pushButton.setObjectName(u"pushButton")
+        self.label = QLabel(self.frame)
+        self.label.setObjectName(u"label")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
 
-        self.gridLayout_2.addWidget(self.pushButton, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.label, 1, 1, 1, 1)
 
-        self.pushButton_2 = QPushButton(self.frame)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.h_slider_brushSize = QSlider(self.frame)
+        self.h_slider_brushSize.setObjectName(u"h_slider_brushSize")
+        sizePolicy.setHeightForWidth(self.h_slider_brushSize.sizePolicy().hasHeightForWidth())
+        self.h_slider_brushSize.setSizePolicy(sizePolicy)
+        self.h_slider_brushSize.setMinimumSize(QSize(130, 0))
+        self.h_slider_brushSize.setMaximum(30)
+        self.h_slider_brushSize.setValue(4)
+        self.h_slider_brushSize.setOrientation(Qt.Horizontal)
+        self.h_slider_brushSize.setTickPosition(QSlider.NoTicks)
+        self.h_slider_brushSize.setTickInterval(12)
 
-        self.gridLayout_2.addWidget(self.pushButton_2, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.h_slider_brushSize, 2, 1, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 0, 1, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -73,8 +92,7 @@ class Ui_animation_creator(object):
 
     def retranslateUi(self, animation_creator):
         animation_creator.setWindowTitle(QCoreApplication.translate("animation_creator", u"Animation Creator", None))
-        self.pushButton.setText(QCoreApplication.translate("animation_creator", u"PushButton", None))
-        self.pushButton_2.setText(QCoreApplication.translate("animation_creator", u"PushButton", None))
+        self.label.setText(QCoreApplication.translate("animation_creator", u"Brush Size:", None))
         self.menuFile.setTitle(QCoreApplication.translate("animation_creator", u"File", None))
     # retranslateUi
 
