@@ -10,6 +10,10 @@ class Canvas(QtWidgets.QLabel):
     def __init__(self):
         super().__init__()
 
+        # Scales up widget to fill it's holder
+        # !!! Need to fix this as it's causing mouse + blurring issues !!!
+        self.setScaledContents(True)
+
         '''
             Initialises a pixmap (drawing_window) that's size is the size of the QLabel (Canvas)
             Fills the background with the chosen color (#ffffff = white)
