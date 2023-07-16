@@ -27,8 +27,7 @@ class Canvas(QtWidgets.QLabel):
         '''
         self.pen = QtGui.QPen()
         self.set_brush_size(4)
-        self.pen_color = QtGui.QColor('#000000')
-        self.pen.setColor(self.pen_color)
+        self.set_pen_color()
         
         '''
             Initialises two variables to record the last recorded x, y positons of the mouse
@@ -52,8 +51,8 @@ class Canvas(QtWidgets.QLabel):
     '''
         Defines the pen_color variable by passing it the color argument
     '''
-    def set_pen_color(self, color):
-        self.pen_color = color
+    def set_pen_color(self, color='#000000'):
+        self.pen.setColor(color)
 
 
     '''
@@ -63,7 +62,7 @@ class Canvas(QtWidgets.QLabel):
     def set_brush_size(self, size):
         self.pen.setWidth(size)
         
-        
+
     '''
         Handles when the mouse moves over the canvas
         This is set to None by default in the __init__
