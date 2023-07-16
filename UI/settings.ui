@@ -110,6 +110,30 @@
         </property>
        </widget>
       </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QPushButton" name="pb_brush">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>75</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: #ffffff;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item>
        <layout class="QHBoxLayout" name="h_layout_color_buttons" stretch="0,0,0">
         <property name="sizeConstraint">
@@ -359,6 +383,7 @@
      <zorder>pb_eraser</zorder>
      <zorder>verticalSpacer_4</zorder>
      <zorder>verticalSpacer_5</zorder>
+     <zorder>pb_brush</zorder>
     </widget>
    </item>
   </layout>

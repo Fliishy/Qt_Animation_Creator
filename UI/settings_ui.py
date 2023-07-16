@@ -76,6 +76,17 @@ class Ui_settings_ui(object):
 
         self.verticalLayout_2.addWidget(self.color_name_text)
 
+        self.pb_brush = QPushButton(self.settings_frame)
+        self.pb_brush.setObjectName(u"pb_brush")
+        sizePolicy1.setHeightForWidth(self.pb_brush.sizePolicy().hasHeightForWidth())
+        self.pb_brush.setSizePolicy(sizePolicy1)
+        self.pb_brush.setMinimumSize(QSize(75, 0))
+        self.pb_brush.setStyleSheet(u"QPushButton {\n"
+"	background-color: #ffffff;\n"
+"}")
+
+        self.verticalLayout_2.addWidget(self.pb_brush, 0, Qt.AlignHCenter)
+
         self.h_layout_color_buttons = QHBoxLayout()
         self.h_layout_color_buttons.setObjectName(u"h_layout_color_buttons")
         self.h_layout_color_buttons.setSizeConstraint(QLayout.SetDefaultConstraint)
@@ -186,6 +197,7 @@ class Ui_settings_ui(object):
         self.color_name_text.raise_()
         self.bg_color_text.raise_()
         self.pb_eraser.raise_()
+        self.pb_brush.raise_()
 
         self.gridLayout.addWidget(self.settings_frame, 0, 0, 1, 1)
 
@@ -199,6 +211,7 @@ class Ui_settings_ui(object):
         settings_ui.setWindowTitle(QCoreApplication.translate("settings_ui", u"Settings UI", None))
         self.color_picker.setText("")
         self.color_name_text.setText(QCoreApplication.translate("settings_ui", u"#000000", None))
+        self.pb_brush.setText("")
         self.pb_black_button.setText("")
         self.pb_color_button.setText("")
         self.pb_white_button.setText("")

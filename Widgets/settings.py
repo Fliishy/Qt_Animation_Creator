@@ -38,6 +38,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         self.background_color = '#ffffff'
 
         # Methods to quickly change colors or to eraser by pressing the push buttons
+        self.pb_brush.pressed.connect(self.brush_button)
         self.pb_black_button.pressed.connect(self.black_button)
         self.pb_white_button.pressed.connect(self.white_button)
         self.pb_color_button.pressed.connect(self.color_button)
@@ -69,7 +70,21 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         self.color_dialog_pen.currentColorChanged.connect(self.color_changed)
 
         if self.color_dialog_pen.exec_() == QtWidgets.QColorDialog.Accepted:
-            pass
+
+            '''
+                This stores the previously selected color from the color picker if the colors are not white or black
+                If they are not the same then the old color var is set to the current color
+                The current color variable is then updated to be the new color
+                The color_button changes to the old color
+            '''
+            if self.color_name == '#ffffff' or self.color_name == '#000000':
+                    pass
+            
+            elif self.bt_color_current != self.color_name:
+                self.bt_color_old = self.bt_color_current 
+                self.bt_color_current = self.color_name
+                self.pb_color_button.setStyleSheet( f'background-color:{self.bt_color_old};')
+
     
     # See show_color_picker notes
     def show_background_picker(self):
@@ -80,11 +95,13 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
             pass
 
     '''
-        If the  selected color is a valid color
+        If the selected color is a valid color
         The background color of the label is set to the selected color
         Border-radius is applied to keep the round shape
         The pen color is set to the color we just selected by calling the set_pen_color method
         The color text is changed to be the current color
+        The brush color button is changed to be the current color
+        A color_name variable is stored to control the old color controls
     '''
     def color_changed(self, color):    
         if color.isValid():
@@ -92,19 +109,9 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
             self.color_picker.setStyleSheet(color_picker_style)
             self.canvas.set_pen_color(color.name())
             self.color_name_text.setText(f'{color.name()}')
-
-            '''
-                This stores the previously selected colorfrom UI.settings_ui import Ui_settings_ui
-                If they are not the same then the old color gets updated to what what was current color
-                The current color variable is then updated to be the new color
-                The color_button changes to the old color
-            '''
-            if self.bt_color_current != color.name():
-                self.bt_color_old = self.bt_color_current
+            self.pb_brush.setStyleSheet(f'background-color:{color.name()}')
+            self.color_name = color.name() # for use with the old color button in show_color_picker method
             
-            self.bt_color_current = color.name()
-            self.pb_color_button.setStyleSheet( f'background-color:{self.bt_color_old};')
-
     '''
         If the selected color is a valid color
         background_color variable is set to the color (for use with eraser)
@@ -120,26 +127,36 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
             self.bg_color_text.setText(color.name())
 
     '''
+        Sets the color picker, pen color and color text to be the brush color
+    '''
+    def brush_button(self):
+        self.color_picker.setStyleSheet(f'background-color:{self.bt_color_current}; border-radius:65%; border: 1px solid black;')
+        self.canvas.set_pen_color(self.bt_color_current)
+        self.color_name_text.setText(self.bt_color_current)
+
+    '''
         Sets the old color variable to the previously selected color
         Changes the color button style to the previously selected color
         Sets the color picker, pen, and color text to black
+        Sets the color_name to be black so that the brush and old color dont change
     '''
     def black_button(self):
-        self.bt_color_old = self.bt_color_current
-        self.pb_color_button.setStyleSheet( f'background-color:{self.bt_color_old};')
         self.color_picker.setStyleSheet( f'background-color:#000000; border-radius:65%; border: 1px solid black;')
         self.canvas.set_pen_color('#000000')
         self.color_name_text.setText('#000000')
+        self.color_name = ('#000000')
 
     '''
         Sets the old color variable to the previously selected color
         Changes the color button style to the previously selected color
         Sets the color picker, pen, and color text to white
+        Sets the color_name to be black so that the brush and old color dont change
     '''
     def white_button(self):
         self.color_picker.setStyleSheet( f'background-color:#ffffff; border-radius:65%; border: 1px solid black;')
         self.canvas.set_pen_color('#ffffff')
         self.color_name_text.setText('#ffffff')
+        self.color_name = ('#ffffff')
 
     '''
         The if statement is setting everything to the current color variable (red) if no color has been selected from the color picker yet
