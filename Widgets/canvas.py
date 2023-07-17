@@ -2,7 +2,7 @@
     This is the logic for drawing with the mouse taken from https://www.pythonguis.com/tutorials/pyside6-bitmap-graphics/
     I've adapted it to fit my own program and added comments throughout
 '''
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtGui, QtWidgets, QtCore
 
 # Uses a QLabel as a simple way to display an image 
 class Canvas(QtWidgets.QLabel):
@@ -10,16 +10,12 @@ class Canvas(QtWidgets.QLabel):
     def __init__(self):
         super().__init__()
 
-        # Scales up widget to fill it's holder
-        # !!! Need to fix this as it's causing mouse + blurring issues !!!
-        self.setScaledContents(True)
-
         '''
-            Initialises a pixmap (drawing_window) that's size is the size of the QLabel (Canvas)
+            Initialises a pixmap (drawing_window) that's size is 1600x900
             Fills the background with the chosen color (#ffffff = white)
             Sets the pixmap of the QLabel (Canvas) to be the pixmap (drawing_window)
         '''
-        self.drawing_window = QtGui.QPixmap(self.size())
+        self.drawing_window = QtGui.QPixmap(1600, 900)
         self.drawing_window.fill('#ffffff')
         self.setPixmap(self.drawing_window)
 
@@ -38,7 +34,6 @@ class Canvas(QtWidgets.QLabel):
             We set them to None to help identify the first mouse event
         '''
         self.last_x, self.last_y = None, None
-
 
     '''
         The bg_color variable is set to color argument passed by the user

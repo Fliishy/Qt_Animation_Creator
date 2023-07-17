@@ -27,7 +27,7 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
 
     window = AnimationCreator()
-    window.show()
+    window.showMaximized()
 
     # terminates the program if it is exited
     sys.exit(app.exec())

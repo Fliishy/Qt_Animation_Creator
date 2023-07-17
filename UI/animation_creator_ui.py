@@ -16,7 +16,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLayout, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QGridLayout, QLayout, QMainWindow,
     QMenu, QMenuBar, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
 
@@ -24,26 +24,26 @@ class Ui_animation_creator(object):
     def setupUi(self, animation_creator):
         if not animation_creator.objectName():
             animation_creator.setObjectName(u"animation_creator")
-        animation_creator.resize(844, 676)
+        animation_creator.resize(893, 719)
         self.centralwidget = QWidget(animation_creator)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.drawing_area = QVBoxLayout()
+        self.drawing_area.setObjectName(u"drawing_area")
+        self.drawing_area.setSizeConstraint(QLayout.SetDefaultConstraint)
+
+        self.gridLayout.addLayout(self.drawing_area, 0, 1, 1, 1)
+
         self.settings_area = QVBoxLayout()
         self.settings_area.setObjectName(u"settings_area")
 
-        self.horizontalLayout.addLayout(self.settings_area)
-
-        self.drawing_area = QVBoxLayout()
-        self.drawing_area.setObjectName(u"drawing_area")
-        self.drawing_area.setSizeConstraint(QLayout.SetMinimumSize)
-
-        self.horizontalLayout.addLayout(self.drawing_area)
+        self.gridLayout.addLayout(self.settings_area, 0, 0, 1, 1)
 
         animation_creator.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(animation_creator)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 844, 22))
+        self.menubar.setGeometry(QRect(0, 0, 893, 22))
         font = QFont()
         font.setPointSize(11)
         self.menubar.setFont(font)
