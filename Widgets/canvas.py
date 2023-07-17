@@ -26,7 +26,7 @@ class Canvas(QtWidgets.QLabel):
             Sets the pen color to be the pen_color variable
         '''
         self.pen = QtGui.QPen()
-        self.set_brush_size(4)
+        self.set_brush_size(10)
         self.set_pen_color()
         
         '''
@@ -77,10 +77,12 @@ class Canvas(QtWidgets.QLabel):
         '''
             self.pixmap() returns the QLabel(Canvas) and sets it to a variable canvas
             Defins the renderer (painter) for displaying graphics and sets canvas as the pixmap for drawing
+            Enable antialiasing to try remove some of the jagged lines 
             Sets the renderers (painter) pen to be the new pen we've called self.pen
         '''
         canvas = self.pixmap()
         self.painter = QtGui.QPainter(canvas)
+        self.painter.setRenderHint(QtGui.QPainter.Antialiasing, on=True)
         self.painter.setPen(self.pen)
 
         '''

@@ -25,6 +25,12 @@ class Ui_animation_creator(object):
         if not animation_creator.objectName():
             animation_creator.setObjectName(u"animation_creator")
         animation_creator.resize(893, 719)
+        self.actionQuit = QAction(animation_creator)
+        self.actionQuit.setObjectName(u"actionQuit")
+        self.actionSave = QAction(animation_creator)
+        self.actionSave.setObjectName(u"actionSave")
+        self.actionSave_As = QAction(animation_creator)
+        self.actionSave_As.setObjectName(u"actionSave_As")
         self.centralwidget = QWidget(animation_creator)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -55,6 +61,9 @@ class Ui_animation_creator(object):
         animation_creator.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFile.menuAction())
+        self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionSave_As)
+        self.menuFile.addAction(self.actionQuit)
 
         self.retranslateUi(animation_creator)
 
@@ -63,6 +72,9 @@ class Ui_animation_creator(object):
 
     def retranslateUi(self, animation_creator):
         animation_creator.setWindowTitle(QCoreApplication.translate("animation_creator", u"Animation Creator", None))
+        self.actionQuit.setText(QCoreApplication.translate("animation_creator", u"Quit", None))
+        self.actionSave.setText(QCoreApplication.translate("animation_creator", u"Save", None))
+        self.actionSave_As.setText(QCoreApplication.translate("animation_creator", u"Save As", None))
         self.menuFile.setTitle(QCoreApplication.translate("animation_creator", u"File", None))
     # retranslateUi
 

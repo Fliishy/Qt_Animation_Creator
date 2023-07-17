@@ -13,8 +13,10 @@ class AnimationCreator(QtWidgets.QMainWindow, Ui_animation_creator):
         self.setupUi(self)
 
         '''
-            Sets up a new canvas widget by calling Canvas()
+            Sets up a new canvas object by calling Canvas()
+            Sets up a new settings object which controls the newly created canvas object
             Adds the canvas to the drawing_area which is a QVBoxLayout
+            Adds the settings to the settings_area which is a QVBoxLayout
         '''
         self.canvas = Canvas()
         self.settings = Settings(self.canvas)
@@ -28,6 +30,5 @@ if __name__ == '__main__':
 
     window = AnimationCreator()
     window.showMaximized()
-
     # terminates the program if it is exited
     sys.exit(app.exec())

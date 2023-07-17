@@ -16,12 +16,11 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         self.color_dialog_background = QtWidgets.QColorDialog(self)
 
         '''
-            Calls the set_brush_size method and sets it to the value of the brushSize slider, when the value of the slider is changed
-            lambda is used to create an anonymous function, : separates it from the expression
-            It allows us to pass the value of the slider into the set_brush_size(size) as it is expecting an arguement
-            If this isn't there then the valueChanged will emit a signal and pass it directly to set_brush_size not it's size arguement
+            Calls the slider changed method when the hsliders value changes
         '''
-        self.h_slider_brushSize.valueChanged.connect(lambda: self.canvas.set_brush_size(self.h_slider_brushSize.value()))
+        self.h_slider_brushSize.valueChanged.connect(self.slider_changed)
+        
+        self.brush_size_text
 
         # Install an event filter on the color pickers to handle mouse clicked events
         self.color_picker.installEventFilter(self)
@@ -33,7 +32,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
             The old color will be left blank
             Initialises a background color variable to be used with the eraser
         '''
-        self.bt_color_current = '#ff0000'
+        self.bt_color_current = '#f471ff'
         self.bt_color_old = ''
         self.background_color = '#ffffff'
 
@@ -105,7 +104,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
     '''
     def color_changed(self, color):    
         if color.isValid():
-            color_picker_style = f'background-color:{color.name()}; border-radius:65%; border: 1px solid black;'
+            color_picker_style = f'background-color:{color.name()}; border-radius:90%; border: 1px solid black;'
             self.color_picker.setStyleSheet(color_picker_style)
             self.canvas.set_pen_color(color.name())
             self.color_name_text.setText(f'{color.name()}')
@@ -130,7 +129,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         Sets the color picker, pen color and color text to be the brush color
     '''
     def brush_button(self):
-        self.color_picker.setStyleSheet(f'background-color:{self.bt_color_current}; border-radius:65%; border: 1px solid black;')
+        self.color_picker.setStyleSheet(f'background-color:{self.bt_color_current}; border-radius:90%; border: 1px solid black;')
         self.canvas.set_pen_color(self.bt_color_current)
         self.color_name_text.setText(self.bt_color_current)
 
@@ -141,7 +140,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         Sets the color_name to be black so that the brush and old color dont change
     '''
     def black_button(self):
-        self.color_picker.setStyleSheet( f'background-color:#000000; border-radius:65%; border: 1px solid black;')
+        self.color_picker.setStyleSheet( f'background-color:#000000; border-radius:90%; border: 1px solid black;')
         self.canvas.set_pen_color('#000000')
         self.color_name_text.setText('#000000')
         self.color_name = ('#000000')
@@ -153,7 +152,7 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
         Sets the color_name to be black so that the brush and old color dont change
     '''
     def white_button(self):
-        self.color_picker.setStyleSheet( f'background-color:#ffffff; border-radius:65%; border: 1px solid black;')
+        self.color_picker.setStyleSheet( f'background-color:#ffffff; border-radius:90%; border: 1px solid black;')
         self.canvas.set_pen_color('#ffffff')
         self.color_name_text.setText('#ffffff')
         self.color_name = ('#ffffff')
@@ -167,12 +166,12 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
     '''
     def color_button(self):
         if self.bt_color_old == '':
-            self.color_picker.setStyleSheet(f'background-color:{self.bt_color_current}; border-radius:65%; border: 1px solid black;')
+            self.color_picker.setStyleSheet(f'background-color:{self.bt_color_current}; border-radius:90%; border: 1px solid black;')
             self.canvas.set_pen_color(self.bt_color_current)
             self.color_name_text.setText(self.bt_color_current)
             self.bt_color_old = self.bt_color_current
         else:
-            self.color_picker.setStyleSheet(f'background-color:{self.bt_color_old}; border-radius:65%; border: 1px solid black;')
+            self.color_picker.setStyleSheet(f'background-color:{self.bt_color_old}; border-radius:90%; border: 1px solid black;')
             self.canvas.set_pen_color(self.bt_color_old)
             self.color_name_text.setText(self.bt_color_old)
 
@@ -183,3 +182,10 @@ class Settings(QtWidgets.QWidget, Ui_settings_ui):
     def eraser_button(self):
         self.canvas.set_pen_color(self.background_color)
         self.color_name_text.setText('Eraser')
+
+    '''
+        Calls the set_brush_size method and sets it to the value of the brushSize slider, when the value of the slider is changed
+    '''
+    def slider_changed(self):
+        self.canvas.set_brush_size(self.h_slider_brushSize.value())
+        self.brush_size_number.setText(str(self.h_slider_brushSize.value()))
