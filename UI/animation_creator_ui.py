@@ -16,7 +16,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QLayout, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLayout, QMainWindow,
     QMenu, QMenuBar, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
 
@@ -33,18 +33,19 @@ class Ui_animation_creator(object):
         self.actionSave_As.setObjectName(u"actionSave_As")
         self.centralwidget = QWidget(animation_creator)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayout = QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName(u"gridLayout")
+        self.horizontalLayout = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.settings_area = QVBoxLayout()
+        self.settings_area.setObjectName(u"settings_area")
+
+        self.horizontalLayout.addLayout(self.settings_area)
+
         self.drawing_area = QVBoxLayout()
         self.drawing_area.setObjectName(u"drawing_area")
         self.drawing_area.setSizeConstraint(QLayout.SetDefaultConstraint)
 
-        self.gridLayout.addLayout(self.drawing_area, 0, 1, 1, 1)
-
-        self.settings_area = QVBoxLayout()
-        self.settings_area.setObjectName(u"settings_area")
-
-        self.gridLayout.addLayout(self.settings_area, 0, 0, 1, 1)
+        self.horizontalLayout.addLayout(self.drawing_area)
 
         animation_creator.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(animation_creator)

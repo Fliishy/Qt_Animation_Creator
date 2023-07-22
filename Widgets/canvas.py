@@ -2,7 +2,7 @@
     This is the logic for drawing with the mouse taken from https://www.pythonguis.com/tutorials/pyside6-bitmap-graphics/
     I've adapted it to fit my own program and added comments throughout
 '''
-from PySide6 import QtGui, QtWidgets, QtCore
+from PySide6 import QtGui, QtWidgets
 
 # Uses a QLabel as a simple way to display an image 
 class Canvas(QtWidgets.QLabel):
@@ -11,13 +11,18 @@ class Canvas(QtWidgets.QLabel):
         super().__init__()
 
         '''
-            Initialises a pixmap (drawing_window) that's size is 1600x900
+            Initialises a pixmap (drawing_window) that's size is the size of widget 
             Fills the background with the chosen color (#ffffff = white)
             Sets the pixmap of the QLabel (Canvas) to be the pixmap (drawing_window)
+            Sets the size policy to be preferred so it will change based on the available space
+            Sets the minimum size to be 10x10px
         '''
-        self.drawing_window = QtGui.QPixmap(1600, 900)
+        self.drawing_window = QtGui.QPixmap(self.width(), self.height())
         self.drawing_window.fill('#ffffff')
         self.setPixmap(self.drawing_window)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        self.setMinimumSize(10,10)
+
 
         '''
             Creates a QPen object that is used inside of the painter
@@ -102,3 +107,13 @@ class Canvas(QtWidgets.QLabel):
     def mouseReleaseEvent(self, current):
         self.last_x = None
         self.last_y = None
+
+    '''
+        When there is a resize event the drawing window size and color are set
+        The canvas object pixmap is set to be the drawing window we created
+        This will happen upon startup because this application will be used on different screens
+    '''
+    def resizeEvent(self, event):
+        self.drawing_window = QtGui.QPixmap(self.width(), self.height())
+        self.drawing_window.fill(QtGui.QColor('#ffffff'))
+        self.setPixmap(self.drawing_window)

@@ -1,5 +1,5 @@
 import sys
-from PySide6 import QtWidgets
+from PySide6 import QtWidgets, QtGui
 
 from UI.animation_creator_ui import Ui_animation_creator
 from Widgets.canvas import Canvas
@@ -14,11 +14,13 @@ class AnimationCreator(QtWidgets.QMainWindow, Ui_animation_creator):
 
         '''
             Sets up a new canvas object by calling Canvas()
+            Sets the size policy to be expanding so that the widget fills the available space
             Sets up a new settings object which controls the newly created canvas object
             Adds the canvas to the drawing_area which is a QVBoxLayout
             Adds the settings to the settings_area which is a QVBoxLayout
         '''
         self.canvas = Canvas()
+        self.canvas.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.settings = Settings(self.canvas)
         self.drawing_area.addWidget(self.canvas)
         self.settings_area.addWidget(self.settings)
